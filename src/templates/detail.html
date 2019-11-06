@@ -138,17 +138,28 @@
                   </div>
                   <!-- /.ribbon-->
                   <div class="ribbon new">
-                    <div class="theribbon">NEW</div>
+                    <div class="theribbon">{{ object.get_category_display }}</div>
                     <div class="ribbon-background"></div>
                   </div>
                   <!-- /.ribbon-->
                 </div>
                 <div class="col-md-6">
                   <div class="box">
-                    <h1 class="text-center">White Blouse Armani</h1>
+                    <h1 class="text-center">{{ object.title }}</h1>
                     <p class="goToDescription"><a href="#details" class="scroll-to">Scroll to product details, material &amp; care and sizing</a></p>
-                    <p class="price">$124.00</p>
-                    <p class="text-center buttons"><a href="basket.html" class="btn btn-primary"><i class="fa fa-shopping-cart"></i> Add to cart</a><a href="basket.html" class="btn btn-outline-primary"><i class="fa fa-heart"></i> Add to wishlist</a></p>
+                    {% if object.discount_price %}
+                      <p class="price"><del>${{ object.price }}</del><br>${{ object.discount_price }}</p>
+                    {% else %}
+                      <p class="price">${{ object.price }}</p>
+                    {% endif %}
+                    <p class="text-center buttons">
+                      <a href="{{ object.get_add_to_cart_url }}" class="btn btn-primary">
+                        <i class="fa fa-shopping-cart"></i> Add to cart</a>
+                        <a href="{{ object.get_remove_from_cart_url }}" class="btn btn-danger">
+                            <i class="fa fa-shopping-cart"></i> Remove from cart</a>
+                      <a href="basket.html" class="btn btn-outline-primary">
+                        <i class="fa fa-heart"></i> Add to wishlist</a>
+                    </p>
                   </div>
                   <div data-slider-id="1" class="owl-thumbs">
                     <button class="owl-thumb-item"><img src="{% static 'img/detailsquare.jpg' %}" alt="" class="img-fluid"></button>
@@ -160,7 +171,7 @@
               <div id="details" class="box">
                 <p></p>
                 <h4>Product details</h4>
-                <p>White lace top, woven, has a round neck, short sleeves, has knitted lining attached</p>
+                <p>{{ object.description }}</p>
                 <h4>Material &amp; care</h4>
                 <ul>
                   <li>Polyester</li>
